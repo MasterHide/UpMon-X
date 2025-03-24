@@ -28,9 +28,30 @@
 - **Easy Setup**: One-line installation and uninstallation using bash scripts.
 - **Lightweight**: Minimal resource usage, perfect for small to medium-sized servers.
 - **Customizable**: Easily adapt to your server's needs with minimal configuration.
+- **Responsive Design**: Works seamlessly on both desktop and mobile devices.
 
 ---
 
+## Ports Required
+
+- **Port 80/443**: These ports must be open to serve the web interface over HTTP/HTTPS.
+- **Monitored Ports**: Ensure the ports you wish to monitor (e.g., `80`,`443` for HTTPS) are open and accessible from the monitoring server.
+
+---
+
+## Recommended OS
+<details>
+  <summary>Click for OS details</summary>
+
+- Ubuntu 20.04+
+- Debian 11+
+- CentOS 8+
+- Arch Linux
+- Armbian
+- Oracle Linux 8+
+- Amazon Linux 2023
+   </details>
+   
 ## 🚀 Installation
 
 Installing UpMon-X is quick and easy. Simply run the following command in your terminal:
@@ -46,3 +67,5 @@ Installing UpMon-X is quick and easy. Simply run the following command in your t
 bash <(curl -s https://raw.githubusercontent.com/MasterHide/UpMon-X/main/UninstallPX.sh)
 ```
 
+## Stargazers over time
+[![Stargazers over time](https://starchart.cc/MasterHide/UpMon-X.svg?background=%230e0d11&axis=%23635e5e&line=%236370ff)](https://starchart.cc/MasterHide/UpMon-X)
