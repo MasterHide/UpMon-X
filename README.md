@@ -3,7 +3,7 @@
 
 <!-- Centered Image -->
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/ed6881e1-9edb-40b6-b0e6-8390bb19b12d" alt="UpMon-X Dashboard">
+  <img src="https://github.com/user-attachments/assets/04237677-20fe-4e53-85a1-acad48791e06" alt="UpMon-X Dashboard">
 </p>
 
 <!-- Centered Subheading -->
