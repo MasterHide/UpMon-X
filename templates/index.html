@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Status</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Josefin Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            color: #ffffff;
+            display: flex; /* Flexbox for centering */
+            align-items: center; /* Center vertically */
+            justify-content: center; /* Center horizontally */
+            min-height: 100vh; /* Ensure full height */
+            background-color: #19192A;
+        }
+        .container-fluid {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+
+        /* ============= Animation Background ========= */
+        .background {
+            background: linear-gradient(132deg, #FC415A, #591BC5, #212335);
+            background-size: 400% 400%;
+            animation: Gradient 15s ease infinite;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100%;
+            z-index: -1;
+        }
+        .cube {
+            position: absolute;
+            top: 80vh;
+            left: 45vw;
+            width: 10px;
+            height: 10px;
+            border: solid 1px #D7D4E4;
+            transform-origin: top left;
+            transform: scale(0) rotate(0deg) translate(-50%, -50%);
+            animation: cube 12s ease-in forwards infinite;
+        }
+        .cube:nth-child(2n) {
+            border-color: #FFF;
+        }
+        .cube:nth-child(2) {
+            animation-delay: 2s;
+            left: 25vw;
+            top: 40vh;
+        }
+        .cube:nth-child(3) {
+            animation-delay: 4s;
+            left: 75vw;
+            top: 50vh;
+        }
+        .cube:nth-child(4) {
+            animation-delay: 6s;
+            left: 90vw;
+            top: 10vh;
+        }
+        .cube:nth-child(5) {
+            animation-delay: 8s;
+            left: 10vw;
+            top: 85vh;
+        }
+        .cube:nth-child(6) {
+            animation-delay: 10s;
+            left: 50vw;
+            top: 10vh;
+        }
+        @keyframes Gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        @keyframes cube {
+            from {
+                transform: scale(0) rotate(0deg) translate(-50%, -50%);
+                opacity: 1;
+            }
+            to {
+                transform: scale(20) rotate(960deg) translate(-50%, -50%);
+                opacity: 0;
+            }
+        }
+
+        /* Content Styling */
+        .content {
+            position: relative;
+            z-index: 1;
+            color: #ffffff;
+            text-align: center;
+        }
+        h1, h3 {
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Server Card Customization */
+        .server-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center; /* Center-align all content inside the card */
+        }
+        .server-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Status Colors */
+        .status-online {
+            color: #ffffff;
+            background: #28a745; /* Green for Online */
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            display: inline-block;
+            animation: pulse 2s infinite alternate; /* Subtle animation for eye-catching effect */
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .status-offline {
+            color: #ffffff;
+            background: #dc3545; /* Red for Offline */
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            display: inline-block;
+        }
+        .status-error {
+            color: #ffffff;
+            background: #ffc107ac; /* Yellow for Error */
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            display: inline-block;
+        }
+
+        /* Additional Information Colors */
+        .info-stable {
+            color: #ffffff; /* Green for stable connection */
+            font-size: 0.8rem;
+        }
+        .info-unstable {
+            color: #ffc107d6; /* Yellow for unstable connection */
+            font-size: 0.8rem;
+        }
+        .info-down {
+            color: #dc3545; /* Red for down connection */
+            font-size: 0.8rem;
+        }
+
+        /* Modern Loading Spinner */
+        .loading-spinner {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 50%; /* Center vertically */
+            left: 50%; /* Center horizontally */
+            transform: translate(-50%, -50%); /* Adjust for exact centering */
+            z-index: 999;
+        }
+        .loading-spinner.active {
+            display: block; /* Show when active */
+        }
+        .spinner-icon {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.2);
+            border-top-color: #7641fc; /* Matches gradient */
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Footer Section */
+        footer {
+            position: absolute; /* Positioned at the bottom */
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            color: #ffffff;
+            font-size: 0.8rem;
+            opacity: 0.7; /* Subtle transparency */
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background">
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container content mt-5">
+        <h1 id="page-title" class="text-center mb-4">Server Status</h1>
+        <div id="server-status"></div>
+
+        <!-- Modern Loading Spinner -->
+        <div class="loading-spinner active">
+            <div class="spinner-icon"></div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        © 2025 UpMon-X. All rights reserved.
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Fetch server status and update UI
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('server-status');
+            const loadingSpinner = document.querySelector('.loading-spinner');
+            const pageTitle = document.getElementById('page-title');
+
+            // Function to toggle loading spinner visibility
+            function toggleLoading(isLoading) {
+                if (isLoading) {
+                    loadingSpinner.classList.add('active'); // Show the spinner
+                    pageTitle.style.visibility = 'hidden'; // Hide page title
+                } else {
+                    loadingSpinner.classList.remove('active'); // Hide the spinner
+                    pageTitle.style.visibility = 'visible'; // Show page title
+                }
+            }
+
+            // Show loading spinner initially
+            toggleLoading(true);
+
+            // Fetch server data
+            fetch('/status')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Hide loading spinner after data is fetched
+                    toggleLoading(false);
+
+                    // Check if there are no servers
+                    if (data.length === 0) {
+                        container.innerHTML = "<p class='no-servers'>No servers to monitor.</p>";
+                        return;
+                    }
+
+                    // Render server cards
+                    data.forEach(server => {
+                        const statusClass = server.status === 'Online' ? 'status-online' :
+                                            server.status === 'Offline' ? 'status-offline' : 'status-error';
+                        const infoClass = server.status === 'Online' ? 'info-stable' :
+                                        server.status === 'Offline' ? 'info-down' : 'info-unstable';
+
+                        const card = `
+                            <div class="server-card">
+                                <div class="d-flex flex-column align-items-center justify-content-center">
+                                    <h3 class="mb-1">${server.name}</h3>
+                                    <p class="mb-0">Status: <span class="${statusClass}">${server.status}</span></p>
+                                    <p class="mb-0"><small class="${infoClass}">${getStatusInfo(server.status)}</small></p>
+                                </div>
+                            </div>
+                        `;
+                        container.innerHTML += card;
+                    });
+                })
+                .catch(error => {
+                    // Hide loading spinner and show error message
+                    toggleLoading(false);
+                    container.innerHTML = "<p class='no-servers error'>Unable to fetch server status. Please try again later.</p>";
+                });
+
+            // Helper function to determine additional status info
+            function getStatusInfo(status) {
+                switch (status) {
+                    case 'Online':
+                        return 'Connection is stable';
+                    case 'Offline':
+                        return 'Connection is down';
+                    default:
+                        return 'Partial connectivity (TCP handshake failed)';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
