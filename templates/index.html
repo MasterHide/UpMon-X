@@ -159,7 +159,7 @@
         }
         .status-error {
             color: #ffffff;
-            background: #ffc107ac; /* Yellow for Error */
+            background: #ff1707ac; /* Yellow for Error */
             padding: 5px 10px;
             border-radius: 5px;
             font-size: 0.8rem;
@@ -172,7 +172,7 @@
             font-size: 0.8rem;
         }
         .info-unstable {
-            color: #ffc107d6; /* Yellow for unstable connection */
+            color: #ff7b07bb; /* Yellow for unstable connection */
             font-size: 0.8rem;
         }
         .info-down {
@@ -319,7 +319,7 @@
                     case 'Offline':
                         return 'Connection is down';
                     default:
-                        return 'Partial connectivity (TCP handshake failed)';
+                        return 'Server Offline';
                 }
             }
         });
